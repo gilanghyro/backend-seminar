@@ -8,7 +8,7 @@ const { NotFoundError, BadRequestError } = require('../../errors');
 const getAllTalents = async (req) => {
   const { keyword } = req.query;
 
-  let condition = {organizer: req.user.organizer};
+  let condition = { organizer: req.user.organizer };
 
   if (keyword) {
     condition = { ...condition, name: { $regex: keyword, $options: 'i' } };
@@ -33,10 +33,15 @@ const createTalents = async (req) => {
   // cari talents dengan field name
   const check = await Talents.findOne({ name, organizer: req.user.organizer });
 
-  // apa bila check true / data talents sudah ada maka kita tampilkan error bad request dengan message pembicara duplikat
+  // apa bila check true / data talents sudah ada maka kita tampilkan error bad request dengan message pembicara sudah terdaftar
   if (check) throw new BadRequestError('pembicara sudah terdaftar');
 
-  const result = await Talents.create({ name, image, role, organizer: req.user.organizer });
+  const result = await Talents.create({
+    name,
+    image,
+    role,
+    organizer: req.user.organizer,
+  });
 
   return result;
 };
@@ -44,7 +49,10 @@ const createTalents = async (req) => {
 const getOneTalents = async (req) => {
   const { id } = req.params;
 
-  const result = await Talents.findOne({ _id: id, organizer: req.user.organizer })
+  const result = await Talents.findOne({
+    _id: id,
+    organizer: req.user.organizer,
+  })
     .populate({
       path: 'image',
       select: '_id name',
@@ -98,13 +106,12 @@ const deleteTalents = async (req) => {
   if (!result)
     throw new NotFoundError(`Tidak ada pembicara dengan id :  ${id}`);
 
-  await result.deleteOne();
+  await result.remove();
 
   return result;
 };
 
 const checkingTalents = async (id) => {
-
   const result = await Talents.findOne({ _id: id });
 
   if (!result)
