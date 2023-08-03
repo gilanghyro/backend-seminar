@@ -1,7 +1,10 @@
-// import services categories
 const { StatusCodes } = require('http-status-codes');
 
-const {createOrganizer, createUsers, getAllUsers,} = require('../../../services/mongoose/users');
+const {
+  createOrganizer,
+  createUsers,
+  getAllUsers,
+} = require('../../../services/mongoose/users');
 
 const getCMSUsers = async (req, res, next) => {
   try {
@@ -25,7 +28,6 @@ const createCMSOrganizer = async (req, res, next) => {
     next(err);
   }
 };
-
 const createCMSUser = async (req, res, next) => {
   try {
     const result = await createUsers(req);
@@ -39,7 +41,7 @@ const createCMSUser = async (req, res, next) => {
 };
 
 module.exports = {
-    createCMSOrganizer,
-    createCMSUser,
-    getCMSUsers,
+  createCMSOrganizer,
+  createCMSUser,
+  getCMSUsers,
 };

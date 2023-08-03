@@ -1,15 +1,15 @@
-const {StatusCodes} = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
-const {createImages} = require('../../../services/mongoose/images');
+const { createImages } = require('../../../services/mongoose/images');
 
-const create = async(req, res, next) => {
-    try {
-        const result = await createImages(req);
+const create = async (req, res, next) => {
+  try {
+    const result = await createImages(req);
 
-        res.status(StatusCodes.CREATED).json({ data: result});
-    } catch (err) {
-        next(err);
-    }
+    res.status(StatusCodes.CREATED).json({ data: result });
+  } catch (err) {
+    next(err);
+  }
 };
 
-module.exports = {create};
+module.exports = { create };
