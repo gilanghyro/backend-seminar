@@ -1,7 +1,7 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
-module.exports = {
+const config = {
   urlDb: process.env.URL_MONGODB_DEV,
   jwtExpiration: process.env.JWT_EXPIRATION,
   jwtSecret: process.env.JWT_SECRET_KEY,
@@ -10,3 +10,5 @@ module.exports = {
   gmail: process.env.GMAIL,
   password: process.env.PASSWORD,
 };
+
+module.exports = config;
